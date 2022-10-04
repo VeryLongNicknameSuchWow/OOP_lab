@@ -16,7 +16,7 @@ dependencies {
 }
 
 application {
-    getMainClass().set('agh.ics.oop.lab1.World')
+    getMainClass().set('agh.ics.oop.World')
 }
 
 java {

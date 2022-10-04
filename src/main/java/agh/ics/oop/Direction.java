@@ -1,4 +1,4 @@
-package agh.ics.oop.lab1;
+package agh.ics.oop;
 
 enum Direction {
     FORWARD("Zwierzak idzie do przodu"),

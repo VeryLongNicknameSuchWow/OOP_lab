@@ -1,4 +1,4 @@
-package agh.ics.oop.lab1;
+package agh.ics.oop;
 
 import java.util.Arrays;
 import java.util.Objects;
