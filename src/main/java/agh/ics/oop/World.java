@@ -19,6 +19,11 @@ public class World {
     }
 
     public static void run(Direction[] directions) {
-        Arrays.stream(directions).forEach(direction -> System.out.println(direction.message));
+        Arrays.stream(directions).map(direction -> switch (direction) {
+            case FORWARD -> "Zwierzak idzie do przodu";
+            case BACKWARD -> "Zwierzak idze do tyłu";
+            case RIGHT -> "Zwierzak skręca w prawo";
+            case LEFT -> "Zwierzak skręca w lewo";
+        }).forEach(System.out::println);
     }
 }
