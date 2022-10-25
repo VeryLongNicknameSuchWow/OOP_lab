@@ -59,6 +59,6 @@ class AnimalTest {
             animal.move(direction);
         }
 
-        Assertions.assertEquals(expected, animal.toString());
+        Assertions.assertEquals(expected, animal.serialize());
     }
 }

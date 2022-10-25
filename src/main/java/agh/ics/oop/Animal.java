@@ -63,9 +63,14 @@ public class Animal {
 
     @Override
     public String toString() {
+        return Character.toString(direction.getArrow());
+    }
+
+    public String serialize() {
         return "Animal{" +
                 "direction=" + direction +
                 ", position=" + position +
+                ", map=" + map +
                 '}';
     }
 }
