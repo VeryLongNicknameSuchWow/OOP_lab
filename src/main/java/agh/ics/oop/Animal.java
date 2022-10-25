@@ -3,15 +3,21 @@ package agh.ics.oop;
 import java.util.Objects;
 
 public class Animal {
-    private MapDirection direction;
+    private MapDirection direction = MapDirection.NORTH;
     private Vector2d position;
-
-    private static final Vector2d RightUpperBound = new Vector2d(4, 4);
-    private static final Vector2d LeftLowerBound = new Vector2d(0, 0);
+    private IWorldMap map;
 
     public Animal() {
-        this.direction = MapDirection.NORTH;
-        this.position = new Vector2d(2, 2);
+        this(new RectangularMap(4, 4));
+    }
+
+    public Animal(final IWorldMap map) {
+        this(map, new Vector2d(2, 2));
+    }
+
+    public Animal(IWorldMap map, Vector2d initialPosition) {
+        this.map = map;
+        this.position = initialPosition;
     }
 
     public boolean isAt(Vector2d position) {
@@ -29,9 +35,9 @@ public class Animal {
 
     private void move(Vector2d moveVector) {
         Vector2d newPosition = this.position.add(moveVector);
-        newPosition = newPosition.lowerLeft(RightUpperBound);
-        newPosition = newPosition.upperRight(LeftLowerBound);
-        this.position = newPosition;
+        if (map.canMoveTo(newPosition)) {
+            this.position = newPosition;
+        }
     }
 
     public MapDirection getDirection() {
