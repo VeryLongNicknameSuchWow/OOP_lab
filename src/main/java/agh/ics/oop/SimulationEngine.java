@@ -19,6 +19,10 @@ public class SimulationEngine implements IEngine {
     @Override
     public void run() {
         Animal[] animals = map.getAnimals();
+        if (animals.length == 0) {
+            return;
+        }
+
         Iterator<MoveDirection> directionIterator = Arrays.stream(directions).iterator();
         while (directionIterator.hasNext()) {
             for (Animal animal : animals) {
