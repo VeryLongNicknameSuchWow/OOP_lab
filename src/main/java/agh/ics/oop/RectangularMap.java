@@ -43,4 +43,10 @@ public class RectangularMap implements IWorldMap {
     public Animal[] getAnimals() {
         return animals.toArray(Animal[]::new);
     }
+
+    @Override
+    public String toString() {
+        MapVisualizer mapVisualizer = new MapVisualizer(this);
+        return mapVisualizer.draw(new Vector2d(0, 0), new Vector2d(width, height));
+    }
 }
