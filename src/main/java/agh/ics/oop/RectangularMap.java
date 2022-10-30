@@ -18,6 +18,10 @@ public class RectangularMap implements IWorldMap {
 
     @Override
     public boolean canMoveTo(Vector2d position) {
+        return isInBounds(position) && !isOccupied(position);
+    }
+
+    public boolean isInBounds(Vector2d position) {
         return position.x >= 0 && position.x <= width && position.y >= 0 && position.y <= height;
     }
 
