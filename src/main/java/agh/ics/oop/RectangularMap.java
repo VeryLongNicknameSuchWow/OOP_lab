@@ -2,6 +2,7 @@ package agh.ics.oop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RectangularMap implements IWorldMap {
 
@@ -47,6 +48,23 @@ public class RectangularMap implements IWorldMap {
     @Override
     public String toString() {
         MapVisualizer mapVisualizer = new MapVisualizer(this);
-        return mapVisualizer.draw(new Vector2d(0, 0), new Vector2d(width, height));
+        Optional<Vector2d> baseVector = animals.stream().map(Animal::getPosition).findAny();
+
+        // map contains no animals
+        if (baseVector.isEmpty()) {
+            Vector2d zeroVector = new Vector2d(0, 0);
+            return mapVisualizer.draw(zeroVector, zeroVector);
+        }
+
+        Vector2d ll = baseVector.get();
+        Vector2d ur = ll;
+
+        for (Animal animal : animals) {
+            Vector2d position = animal.getPosition();
+            ll = ll.lowerLeft(position);
+            ur = ur.upperRight(position);
+        }
+
+        return mapVisualizer.draw(ll, ur);
     }
 }
