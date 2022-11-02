@@ -63,7 +63,7 @@ public class Animal {
 
     @Override
     public String toString() {
-        return Character.toString(direction.getArrow());
+        return Character.toString(direction.getLetter());
     }
 
     public String serialize() {
