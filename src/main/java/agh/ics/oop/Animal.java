@@ -70,7 +70,6 @@ public class Animal {
         return "Animal{" +
                 "direction=" + direction +
                 ", position=" + position +
-                ", map=" + map +
                 '}';
     }
 }
