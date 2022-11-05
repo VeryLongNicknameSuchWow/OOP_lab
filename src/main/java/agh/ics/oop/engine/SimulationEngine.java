@@ -1,5 +1,6 @@
 package agh.ics.oop.engine;
 
+import agh.ics.oop.map.AbstractWorldMap;
 import agh.ics.oop.map.IWorldMap;
 import agh.ics.oop.map.Vector2d;
 import agh.ics.oop.map.element.Animal;
@@ -23,15 +24,19 @@ public class SimulationEngine implements IEngine {
 
     @Override
     public void run() {
-        Animal[] animals = map.getAnimals();
-        if (animals.length == 0) {
+        if (!(map instanceof AbstractWorldMap abstractWorldMap)) {
             return;
         }
 
         Iterator<MoveDirection> directionIterator = Arrays.stream(directions).iterator();
         while (directionIterator.hasNext()) {
-            for (Animal animal : animals) {
+            boolean madeMove = false;
+            for (Animal animal : abstractWorldMap.getElements(Animal.class)) {
                 animal.move(directionIterator.next());
+                madeMove = true;
+            }
+            if (!madeMove) {
+                return;
             }
         }
     }

@@ -7,10 +7,8 @@ import agh.ics.oop.map.Vector2d;
 
 import java.util.Objects;
 
-public class Animal {
+public class Animal extends AbstractWorldMapElement {
     private MapDirection direction = MapDirection.NORTH;
-    private Vector2d position;
-    private IWorldMap map;
 
     public Animal() {
         this(new RectangularMap(4, 4));
@@ -21,27 +19,15 @@ public class Animal {
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
-        this.map = map;
-        this.position = initialPosition;
-    }
-
-    public boolean isAt(Vector2d position) {
-        return position.equals(this.position);
+        super(map, true, initialPosition);
     }
 
     public void move(MoveDirection moveDirection) {
         switch (moveDirection) {
-            case FORWARD -> this.move(this.direction.toUnitVector());
-            case BACKWARD -> this.move(this.direction.toUnitVector().opposite());
-            case RIGHT -> this.direction = this.direction.next();
-            case LEFT -> this.direction = this.direction.previous();
-        }
-    }
-
-    private void move(Vector2d moveVector) {
-        Vector2d newPosition = this.position.add(moveVector);
-        if (map.canMoveTo(newPosition)) {
-            this.position = newPosition;
+            case FORWARD -> super.move(position.add(direction.toUnitVector()));
+            case BACKWARD -> super.move(position.add(direction.toUnitVector().opposite()));
+            case RIGHT -> direction = direction.next();
+            case LEFT -> direction = direction.previous();
         }
     }
 
@@ -49,21 +35,17 @@ public class Animal {
         return direction;
     }
 
-    public Vector2d getPosition() {
-        return position;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Animal animal = (Animal) o;
-        return direction == animal.direction && Objects.equals(position, animal.position);
+        if (!(o instanceof Animal animal)) return false;
+        if (!super.equals(o)) return false;
+        return direction == animal.direction;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(direction, position);
+        return Objects.hash(super.hashCode(), direction);
     }
 
     @Override
