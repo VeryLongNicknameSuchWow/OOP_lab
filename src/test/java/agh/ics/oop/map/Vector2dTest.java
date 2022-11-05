@@ -1,6 +1,5 @@
-package agh.ics.oop;
+package agh.ics.oop.map;
 
-import agh.ics.oop.map.Vector2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
