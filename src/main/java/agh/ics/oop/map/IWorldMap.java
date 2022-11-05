@@ -1,4 +1,6 @@
-package agh.ics.oop;
+package agh.ics.oop.map;
+
+import agh.ics.oop.map.element.Animal;
 
 /**
  * The interface responsible for interacting with the map of the world.

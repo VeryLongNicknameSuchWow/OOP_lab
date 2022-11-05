@@ -1,4 +1,9 @@
-package agh.ics.oop;
+package agh.ics.oop.map.element;
+
+import agh.ics.oop.map.IWorldMap;
+import agh.ics.oop.map.MapDirection;
+import agh.ics.oop.map.RectangularMap;
+import agh.ics.oop.map.Vector2d;
 
 import java.util.Objects;
 

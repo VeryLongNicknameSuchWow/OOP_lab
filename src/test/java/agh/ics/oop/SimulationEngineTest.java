@@ -1,5 +1,12 @@
 package agh.ics.oop;
 
+import agh.ics.oop.engine.IEngine;
+import agh.ics.oop.engine.SimulationEngine;
+import agh.ics.oop.map.IWorldMap;
+import agh.ics.oop.map.RectangularMap;
+import agh.ics.oop.map.Vector2d;
+import agh.ics.oop.map.element.MoveDirection;
+import agh.ics.oop.util.OptionsParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

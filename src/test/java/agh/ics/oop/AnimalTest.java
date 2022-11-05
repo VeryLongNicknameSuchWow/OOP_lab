@@ -1,6 +1,9 @@
 package agh.ics.oop;
 
 
+import agh.ics.oop.map.element.Animal;
+import agh.ics.oop.map.element.MoveDirection;
+import agh.ics.oop.util.OptionsParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;

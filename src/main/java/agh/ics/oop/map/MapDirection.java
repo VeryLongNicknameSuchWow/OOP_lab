@@ -1,4 +1,4 @@
-package agh.ics.oop;
+package agh.ics.oop.map;
 
 public enum MapDirection {
     NORTH(0, 1, "Północ", 'N'),

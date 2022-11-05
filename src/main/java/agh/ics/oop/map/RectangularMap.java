@@ -1,4 +1,6 @@
-package agh.ics.oop;
+package agh.ics.oop.map;
+
+import agh.ics.oop.map.element.Animal;
 
 import java.util.ArrayList;
 import java.util.List;
