@@ -4,22 +4,31 @@ package agh.ics.oop.map;
 import agh.ics.oop.map.element.AbstractWorldMapElement;
 import agh.ics.oop.map.element.Animal;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-public abstract class AbstractWorldMap implements IWorldMap {
+public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
+    protected final Map<Vector2d, AbstractWorldMapElement> elementMap;
     protected final List<AbstractWorldMapElement> elements;
 
     public AbstractWorldMap() {
-        this.elements = new ArrayList<>();
+        this.elementMap = new HashMap<>();
+        this.elements = new LinkedList<>();
+    }
+
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        AbstractWorldMapElement element = elementMap.remove(oldPosition);
+        elementMap.put(newPosition, element);
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return elements.stream().noneMatch(element -> element.isAt(position) && element.hasCollision());
+        AbstractWorldMapElement element = elementMap.get(position);
+        if (element == null) {
+            return true;
+        }
+        return !element.hasCollision();
     }
 
     @Override
@@ -29,26 +38,37 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
     public boolean placeElement(AbstractWorldMapElement element) {
         Vector2d position = element.getPosition();
-        if (element.hasCollision()) {
-            if (canMoveTo(position)) {
-                return elements.add(element);
-            }
-        } else {
-            if (!isOccupied(position)) {
-                return elements.add(element);
-            }
+        if (canMoveTo(position)) {
+            AbstractWorldMapElement previous = elementMap.remove(position);
+            removeElement(previous);
+            element.addObserver(this);
+            elements.add(element);
+            elementMap.put(position, element);
+            return true;
         }
         return false;
     }
 
+    public void removeElement(AbstractWorldMapElement element) {
+        if (element == null) {
+            return;
+        }
+        element.removeObserver(this);
+        Vector2d position = element.getPosition();
+        this.elements.remove(element);
+        if (element.equals(this.elementMap.get(position))) {
+            elementMap.remove(position);
+        }
+    }
+
     @Override
     public boolean isOccupied(Vector2d position) {
-        return elements.stream().anyMatch(element -> element.isAt(position));
+        return elementMap.containsKey(position);
     }
 
     @Override
     public Object objectAt(Vector2d position) {
-        return elements.stream().filter(element -> element.isAt(position)).findAny().orElse(null);
+        return elementMap.get(position);
     }
 
     public List<AbstractWorldMapElement> getElements() {

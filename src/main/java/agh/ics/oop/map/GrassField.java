@@ -1,6 +1,6 @@
 package agh.ics.oop.map;
 
-import agh.ics.oop.map.element.Animal;
+import agh.ics.oop.map.element.AbstractWorldMapElement;
 import agh.ics.oop.map.element.Grass;
 
 public class GrassField extends AbstractWorldMap {
@@ -23,13 +23,12 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public boolean place(Animal animal) {
-        Vector2d position = animal.getPosition();
+    public boolean placeElement(AbstractWorldMapElement element) {
+        Vector2d position = element.getPosition();
         if (isGrass(position)) {
             placeRandomGrass();
-            elements.removeIf(element -> (element instanceof Grass) && element.isAt(position));
         }
-        return super.place(animal);
+        return super.placeElement(element);
     }
 
     public boolean isGrass(Vector2d position) {

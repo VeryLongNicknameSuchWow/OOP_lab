@@ -1,18 +1,23 @@
 package agh.ics.oop.map.element;
 
+import agh.ics.oop.map.IPositionChangeObserver;
 import agh.ics.oop.map.IWorldMap;
 import agh.ics.oop.map.Vector2d;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractWorldMapElement {
     protected final IWorldMap map;
+    protected final List<IPositionChangeObserver> observers;
     protected final boolean collision;
 
     protected Vector2d position;
 
     public AbstractWorldMapElement(IWorldMap map, boolean collision, Vector2d position) {
         this.map = map;
+        this.observers = new LinkedList<>();
         this.collision = collision;
         this.position = position;
     }
@@ -23,8 +28,23 @@ public abstract class AbstractWorldMapElement {
 
     protected void move(Vector2d newPosition) {
         if (map.canMoveTo(newPosition)) {
+            this.positionChanged(newPosition);
             this.position = newPosition;
         }
+    }
+
+    private void positionChanged(Vector2d newPosition) {
+        for (IPositionChangeObserver observer : observers) {
+            observer.positionChanged(this.position, newPosition);
+        }
+    }
+
+    public void addObserver(IPositionChangeObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(IPositionChangeObserver observer) {
+        observers.remove(observer);
     }
 
     public Vector2d getPosition() {
