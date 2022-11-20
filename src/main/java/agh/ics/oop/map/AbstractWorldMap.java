@@ -10,16 +10,19 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
 
     protected final Map<Vector2d, AbstractWorldMapElement> elementMap;
     protected final List<AbstractWorldMapElement> elements;
+    protected final MapBoundary mapBoundary;
 
     public AbstractWorldMap() {
         this.elementMap = new HashMap<>();
         this.elements = new LinkedList<>();
+        this.mapBoundary = new MapBoundary();
     }
 
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
         AbstractWorldMapElement element = elementMap.remove(oldPosition);
         elementMap.put(newPosition, element);
+        mapBoundary.positionChanged(oldPosition, newPosition);
     }
 
     @Override
@@ -44,6 +47,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
             element.addObserver(this);
             elements.add(element);
             elementMap.put(position, element);
+            mapBoundary.addPosition(position);
             return true;
         }
         throw new IllegalArgumentException(position + " is already occupied");
@@ -85,22 +89,12 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     @Override
     public String toString() {
         MapVisualizer mapVisualizer = new MapVisualizer(this);
-        Optional<Vector2d> baseVector = elements.stream().map(AbstractWorldMapElement::getPosition).findAny();
-
-        // map contains no elements
-        if (baseVector.isEmpty()) {
-            Vector2d zeroVector = new Vector2d(0, 0);
-            return mapVisualizer.draw(zeroVector, zeroVector);
+        if (!mapBoundary.hasBoundary()) {
+            throw new IllegalStateException("unable to draw map");
         }
 
-        Vector2d ll = baseVector.get();
-        Vector2d ur = ll;
-
-        for (AbstractWorldMapElement element : elements) {
-            Vector2d position = element.getPosition();
-            ll = ll.lowerLeft(position);
-            ur = ur.upperRight(position);
-        }
+        Vector2d ll = mapBoundary.getMinByX().lowerLeft(mapBoundary.getMinByY());
+        Vector2d ur = mapBoundary.getMaxByX().upperRight(mapBoundary.getMaxByY());
 
         return mapVisualizer.draw(ll, ur);
     }
