@@ -86,6 +86,10 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
                 .toList();
     }
 
+    public MapBoundary getMapBoundary() {
+        return mapBoundary;
+    }
+
     @Override
     public String toString() {
         MapVisualizer mapVisualizer = new MapVisualizer(this);
@@ -93,9 +97,6 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
             throw new IllegalStateException("unable to draw map");
         }
 
-        Vector2d ll = mapBoundary.getMinByX().lowerLeft(mapBoundary.getMinByY());
-        Vector2d ur = mapBoundary.getMaxByX().upperRight(mapBoundary.getMaxByY());
-
-        return mapVisualizer.draw(ll, ur);
+        return mapVisualizer.draw(mapBoundary.getLowerLeft(), mapBoundary.getUpperRight());
     }
 }

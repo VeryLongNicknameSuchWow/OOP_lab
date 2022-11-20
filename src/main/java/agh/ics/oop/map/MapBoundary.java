@@ -48,4 +48,20 @@ public class MapBoundary implements IPositionChangeObserver {
     public Vector2d getMinByY() {
         return orderedByY.first();
     }
+
+    public Vector2d getLowerLeft() {
+        return getMinByX().lowerLeft(getMinByY());
+    }
+
+    public Vector2d getUpperRight() {
+        return getMaxByX().upperRight(getMaxByY());
+    }
+
+    public int getCurrentHeight() {
+        return getMaxByY().y - getMinByY().y + 1;
+    }
+
+    public int getCurrentWidth() {
+        return getMaxByX().x - getMinByX().x + 1;
+    }
 }
