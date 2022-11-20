@@ -46,7 +46,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
             elementMap.put(position, element);
             return true;
         }
-        return false;
+        throw new IllegalArgumentException(position + " is already occupied");
     }
 
     public void removeElement(AbstractWorldMapElement element) {

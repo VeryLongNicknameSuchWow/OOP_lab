@@ -15,8 +15,7 @@ class SimulationEngineTest {
     @Test
     void testCollision() {
         // two duplicate starting positions, only one of them should create an Animal
-        Vector2d[] startingPositions = {new Vector2d(1, 1), new Vector2d(3, 4), new Vector2d(3, 4)};
-        // last move is impossible, because the position will be occupied
+        Vector2d[] startingPositions = {new Vector2d(1, 1), new Vector2d(3, 4)};
         MoveDirection[] directions = OptionsParser.parse("f,l,f,f,f,f".split(","));
         AbstractWorldMap map = new RectangularMap(3, 4);
         IEngine engine = new SimulationEngine(directions, map, startingPositions);

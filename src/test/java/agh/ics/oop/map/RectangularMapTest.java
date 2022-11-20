@@ -41,20 +41,25 @@ public class RectangularMapTest {
         res = rectangularMap.place(new Animal(rectangularMap, new Vector2d(5, 5)));
         Assertions.assertTrue(res);
 
-        res = rectangularMap.place(new Animal(rectangularMap, new Vector2d(6, 5)));
-        Assertions.assertFalse(res);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> rectangularMap.place(new Animal(rectangularMap, new Vector2d(6, 5)))
+        );
 
-        res = rectangularMap.place(new Animal(rectangularMap, new Vector2d(5, 6)));
-        Assertions.assertFalse(res);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> rectangularMap.place(new Animal(rectangularMap, new Vector2d(5, 6)))
+        );
 
-        res = rectangularMap.place(new Animal(rectangularMap, new Vector2d(10, 10)));
-        Assertions.assertFalse(res);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> rectangularMap.place(new Animal(rectangularMap, new Vector2d(10, 10)))
+        );
 
-        res = rectangularMap.place(new Animal(rectangularMap, new Vector2d(-1, 5)));
-        Assertions.assertFalse(res);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> rectangularMap.place(new Animal(rectangularMap, new Vector2d(-1, 5)))
+        );
 
-        res = rectangularMap.place(new Animal(rectangularMap, new Vector2d(-1, -5)));
-        Assertions.assertFalse(res);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> rectangularMap.place(new Animal(rectangularMap, new Vector2d(-1, -5)))
+        );
 
         Assertions.assertEquals(2, rectangularMap.getElements().size());
     }
@@ -66,8 +71,9 @@ public class RectangularMapTest {
         boolean res = rectangularMap.place(new Animal(rectangularMap, new Vector2d(2, 2)));
         Assertions.assertTrue(res);
 
-        res = rectangularMap.place(new Animal(rectangularMap, new Vector2d(2, 2)));
-        Assertions.assertFalse(res);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> rectangularMap.place(new Animal(rectangularMap, new Vector2d(2, 2)))
+        );
 
         Assertions.assertEquals(1, rectangularMap.getElements().size());
     }

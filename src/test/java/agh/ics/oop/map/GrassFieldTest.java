@@ -29,7 +29,7 @@ public class GrassFieldTest {
         Animal animal2 = new Animal(grassField, grassPosition);
         Assertions.assertTrue(grassField.place(animal2));
         Animal animal3 = new Animal(grassField, grassPosition);
-        Assertions.assertFalse(grassField.place(animal3));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> grassField.place(animal3));
 
         Assertions.assertEquals(3, grassField.getElements().size());
         Assertions.assertEquals(animal1, grassField.objectAt(animalPosition));
