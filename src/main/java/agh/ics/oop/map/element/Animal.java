@@ -5,6 +5,8 @@ import agh.ics.oop.map.MapDirection;
 import agh.ics.oop.map.RectangularMap;
 import agh.ics.oop.map.Vector2d;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 public class Animal extends AbstractWorldMapElement {
@@ -46,6 +48,16 @@ public class Animal extends AbstractWorldMapElement {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), direction);
+    }
+
+    @Override
+    public Path getTexture() {
+        return switch (direction) {
+            case NORTH -> Paths.get("src/main/resources/up.png");
+            case EAST -> Paths.get("src/main/resources/right.png");
+            case SOUTH -> Paths.get("src/main/resources/down.png");
+            case WEST -> Paths.get("src/main/resources/left.png");
+        };
     }
 
     @Override

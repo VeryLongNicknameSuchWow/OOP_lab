@@ -4,6 +4,7 @@ import agh.ics.oop.map.IPositionChangeObserver;
 import agh.ics.oop.map.IWorldMap;
 import agh.ics.oop.map.Vector2d;
 
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -54,6 +55,8 @@ public abstract class AbstractWorldMapElement {
     public boolean hasCollision() {
         return collision;
     }
+
+    public abstract Path getTexture();
 
     @Override
     public abstract String toString();

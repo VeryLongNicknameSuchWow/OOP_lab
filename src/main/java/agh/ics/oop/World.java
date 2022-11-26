@@ -7,7 +7,7 @@ public class World {
 
     public static void main(String[] args) {
         try {
-            Application.launch(App.class);
+            Application.launch(App.class, args);
         } catch (Exception e) {
             e.printStackTrace();
         }
